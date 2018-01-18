@@ -7,7 +7,7 @@ In enterprise security, management of per site IP address lists is complex, ofte
 Spreadsheet before intersection: 
 ![image of france_without_paris.xlsx before intersection](/examples/france_without_paris.png) 
 ```
-python3 intersection.py examples/france_without_paris.xlsx 
+$ python3 intersection.py examples/france_without_paris.xlsx 
   192.168.1.0/24 -> 192.168.0.0/23  examples/france_without_paris.xlsx:A4 -> examples/france_without_paris.xlsx:A3
 ```
 
@@ -18,7 +18,7 @@ The result is saved to the spreadsheet to allow easy sorting and editing of over
 
 Intersection can also find overlaps through out multiple spreadsheets, to ensure each spreadsheet only contain a list of unique subnets:
 ```
-python3 intersection.py examples/france_without_paris.xlsx examples/paris_branch_office.xlsx 
+$ python3 intersection.py examples/france_without_paris.xlsx examples/paris_branch_office.xlsx 
   192.168.1.0/24 -> 192.168.0.0/23  examples/france_without_paris.xlsx:A4 -> examples/france_without_paris.xlsx:A3
   172.16.20.0/30 -> 172.16.20.0/30  examples/paris_branch_office.xlsx:A2 -> examples/france_without_paris.xlsx:A2
   10.0.1.0/24 -> 10.0.0.0/16  examples/paris_branch_office.xlsx:A3 -> examples/france_without_paris.xlsx:A6
@@ -28,7 +28,7 @@ Multiple intersections are detected in the above example, the VPN link is perhap
 
 ## The Intersection --help page
 ```
-python3 intersection.py --help
+$ python3 intersection.py --help
 Usage: intersection.py [OPTION]... <EXCEl_SPREADSHEET>...
 
 Verify overlap of each IPv4 network in a spreadsheet column of multiple
