@@ -22,6 +22,10 @@ $ python3 intersection.py examples/france_without_paris.xlsx examples/paris_bran
   192.168.1.0/24 -> 192.168.0.0/23  examples/france_without_paris.xlsx:A4 -> examples/france_without_paris.xlsx:A3
   172.16.20.0/30 -> 172.16.20.0/30  examples/paris_branch_office.xlsx:A2 -> examples/france_without_paris.xlsx:A2
   10.0.1.0/24 -> 10.0.0.0/16  examples/paris_branch_office.xlsx:A3 -> examples/france_without_paris.xlsx:A6
+  192.168.1.0/26 -> 192.168.0.0/23  examples/paris_branch_office.xlsx:A4 -> examples/france_without_paris.xlsx:A3
+  192.168.1.64/26 -> 192.168.0.0/23  examples/paris_branch_office.xlsx:A5 -> examples/france_without_paris.xlsx:A3
+  192.168.1.128/26 -> 192.168.0.0/23  examples/paris_branch_office.xlsx:A6 -> examples/france_without_paris.xlsx:A3
+  192.168.1.192/26 -> 192.168.0.0/23  examples/paris_branch_office.xlsx:A7 -> examples/france_without_paris.xlsx:A3
 ```
 
 Multiple intersections are detected in the above example, the VPN link is perhaps intensional, whereas the 10.0/16 may not be.

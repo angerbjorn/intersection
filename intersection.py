@@ -25,8 +25,8 @@ for excel in args:
 			try:
 				n = ipaddress.ip_network( data )
 			except ValueError as err:
-				if i: # first line assumed to be a header...
-					print( "Warning: Cell %s%d value '%s' is not recognised as a IPv4 net." %(ops.network, i+1, row[ ord(ops.network.upper())-65 ].value))
+				if i and not data.startswith('#'): # first line assumed to be a header...
+					print( "Warning: Cell %s%d value '%s' is not recognised as a IPv4 net." %(ops.network, i+1, data))
 				continue
 
 			# check if this net overlap any existing:
