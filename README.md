@@ -46,6 +46,9 @@ $ python3 intersection.py examples/france_without_paris.xlsx --location-prepend 
 
 ![image of france_without_paris after intersection and location fix](/examples/france_without_paris_location_fixed.png) 
 
+Above, France has been prepended to all but the first row, which already has the phrase 'France'. 
+
+
 ### Remove overlap comments
 
 Overlap comments can be removed, effectively reverting the spreadsheet to its original state with the --clean flag:
