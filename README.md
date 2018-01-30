@@ -30,12 +30,13 @@ $ python3 intersection.py examples/france_without_paris.xlsx examples/paris_bran
 Multiple intersections are detected in the above example, the VPN link is perhaps intensional, whereas the 10.0/16 may not be.
 
 ### Prepend to location data
-The zoomed-out perspective is often missing in location data, for example a location may be 'Temuco branch office' or 'Main office 2nd floor', but witout reference to what country or city. 
-However country or preferable even city locations is needed to manage global risks. 
+The zoomed-out perspective is often missing in location data, for example a location may be 'Temuco branch office' or 'Main office 2nd floor', but without reference to what country or city. 
+However country or preferable even city locations is needed to manage global risks.
 
-The --location-prepend France seach each location cell for France (case-insensitive), then prepend the phrase in each cell where it is not found. 
+The --location-prepend France search each location cell for France (case-insensitive), then prepend the phrase in each cell where it is not found.
 
 Excel before:
+
 ![image of france_without_paris before intersection and location fix](/examples/france_without_paris_location.png) 
 
 ```
@@ -46,7 +47,9 @@ $ python3 intersection.py examples/france_without_paris.xlsx --location-prepend 
 ![image of france_without_paris after intersection and location fix](/examples/france_without_paris_location_fixed.png) 
 
 ### Remove overlap comments
-Overlap comments can be removed, effectivly reverding the spreadsheet to its original state with the --clean flag:
+
+Overlap comments can be removed, effectively reverting the spreadsheet to its original state with the --clean flag:
+
 ```
 $ python3 intersection.py examples/france_without_paris.xlsx --clean
 ```
