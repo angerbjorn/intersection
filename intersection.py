@@ -7,7 +7,9 @@ parser = optparse.OptionParser(usage="Usage: %prog [OPTION]... <EXCEl_SPREADSHEE
 	epilog='Open Source MIT License. Written by Christian Angerbjorn')
 parser.add_option("-n", "--network", default='A', help="Network data column")
 parser.add_option("-c", "--comment", default='D', help="Uniqueness comment column")
-parser.add_option("-C", "--clear", action="store_true", help="Remove all overlap comment and exit")
+parser.add_option("-l", "--location", default='B', help="Location column")
+parser.add_option("-p", "--location-prepend", help="Prepend this string to all cells that does not already contain this, for example: --location-prepend France")
+parser.add_option("-C", "--clean", action="store_true", help="Remove all overlap comment and exit")
 parser.add_option("-s", "--stats",  action="store_true", help="Show stats on how many unique IP addresses found.")
 parser.add_option("-r", "--read-only",  action="store_true", default=False, help="Open spreadsheets as read-only")
 (ops, args) = parser.parse_args()
@@ -27,7 +29,7 @@ for excel in args:
 			# remove any hashTag comments first.
 			if not ops.read_only and sheet[ ops.network + str(i+1) ].value and sheet[ ops.network + str(i+1) ].value.startswith(hashTag):
 				sheet[ ops.network + str(i+1) ].value = sheet[ ops.network + str(i+1) ].value[len(hashTag) : ] # remove # overlap at begening of string
-			if  ops.clear:
+			if  ops.clean:
 				if not ops.read_only and sheet[ ops.comment + str(i+1) ].value and sheet[ ops.comment + str(i+1) ].value.startswith(excelTag):
 					sheet[ ops.comment + str(i+1) ].value = ''
 			else:
@@ -35,9 +37,14 @@ for excel in args:
 				this_address = '%s:%s%d' %(excel, ops.network.upper(), i+1 )
 				try:
 					n = ipaddress.ip_network( data )
+					# prepend location data 
+					if ops.location_prepend:
+						loc = row[ ord(ops.location.upper())-65 ].value 
+						if (not loc ) or (loc and loc.lower().find( ops.location_prepend.lower() ) == -1):
+							row[ ord(ops.location.upper())-65 ].value = "%s - %s" %(ops.location_prepend, loc)
 				except ValueError as err:
 					if i and not data.startswith('#'): # first line assumed to be a header...
-						print( "Warning: Cell %s%d value '%s' is not recognised as a IPv4 net." %(ops.network, i+1, data))
+						print( "Warning:    Cell %s%d value '%s' is not recognised as a IPv4 net." %(ops.network, i+1, data))
 					continue
 	
 				# check if this net overlap any existing:
@@ -54,7 +61,7 @@ for excel in args:
 								sheet[ ops.network + str(i+1) ] = hashTag + sheet[ ops.network + str(i+1) ].value 
 							print("  %s -> %s  %s -> %s" %( data, net, this_address, directory[ net ] ))
 						break
-				# clear previous comment 
+				# clean previous comment 
 				if not overlap and not ops.read_only and sheet[ ops.comment + str(i+1) ].value and sheet[ ops.comment + str(i+1) ].value.startswith(excelTag):
 					sheet[ ops.comment + str(i+1) ].value = ''
 					

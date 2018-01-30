@@ -27,12 +27,33 @@ $ python3 intersection.py examples/france_without_paris.xlsx examples/paris_bran
   192.168.1.128/26 -> 192.168.0.0/23  examples/paris_branch_office.xlsx:A6 -> examples/france_without_paris.xlsx:A3
   192.168.1.192/26 -> 192.168.0.0/23  examples/paris_branch_office.xlsx:A7 -> examples/france_without_paris.xlsx:A3
 ```
-
 Multiple intersections are detected in the above example, the VPN link is perhaps intensional, whereas the 10.0/16 may not be.
+
+### Prepend to location data
+The zoomed-out perspective is often missing in location data, for example a location may be 'Temuco branch office' or 'Main office 2nd floor', but witout reference to what country or city. 
+However country or preferable even city locations is needed to manage global risks. 
+
+The --location-prepend France seach each location cell for France (case-insensitive), then prepend the phrase in each cell where it is not found. 
+
+Excel before:
+![image of france_without_paris before intersection and location fix](/examples/france_without_paris_location.png) 
+
+```
+$ python3 intersection.py examples/france_without_paris.xlsx --location-prepend France 
+  192.168.1.0/24 -> 192.168.0.0/23  examples/france_without_paris.xlsx:A4 -> examples/france_without_paris.xlsx:A3
+```
+
+![image of france_without_paris after intersection and location fix](/examples/france_without_paris_location_fixed.png) 
+
+### Remove overlap comments
+Overlap comments can be removed, effectivly reverding the spreadsheet to its original state with the --clean flag:
+```
+$ python3 intersection.py examples/france_without_paris.xlsx --clean
+```
 
 ## The Intersection --help page
 ```
-$ python3 intersection.py --help
+python3 intersection.py examples/france_without_paris.xlsx --help
 Usage: intersection.py [OPTION]... <EXCEl_SPREADSHEET>...
 
 Verify overlap of each IPv4 network in a spreadsheet column of multiple
@@ -45,6 +66,12 @@ Options:
                         Network data column
   -c COMMENT, --comment=COMMENT
                         Uniqueness comment column
+  -l LOCATION, --location=LOCATION
+                        Location column
+  -p LOCATION_PREPEND, --location-prepend=LOCATION_PREPEND
+                        Prepend this string to all cells that does not already
+                        contain this, for example: --location-prepend France
+  -C, --clear           Remove all overlap comment and exit
   -s, --stats           Show stats on how many unique IP addresses found.
   -r, --read-only       Open spreadsheets as read-only
 
