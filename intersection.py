@@ -44,7 +44,8 @@ for excel in args:
 							row[ ord(ops.location.upper())-65 ].value = "%s - %s" %(ops.location_prepend, loc)
 				except ValueError as err:
 					if i and not data.startswith('#'): # first line assumed to be a header...
-						print( "Warning:    Cell %s%d value '%s' is not recognised as a IPv4 net." %(ops.network, i+1, data))
+						print( "Fatal:    Cell %s%d value '%s' is not recognised as a IPv4 net." %(ops.network, i+1, data))
+						exit()
 					continue
 	
 				# check if this net overlap any existing:
